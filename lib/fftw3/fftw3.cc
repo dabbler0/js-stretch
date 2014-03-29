@@ -11,6 +11,11 @@
             String::New("Argument " #I ": " #TYPE " required" ))) ;     \
     Local<TYPE> VAR = Local<TYPE>::Cast(ARGS[I]) ;
 
+/*
+ * Derviative of https://github.com/bpadalino/node_fftw by Brian Padalino
+ * Adapted for nodejs >=5.x by Anthony Bau
+ */
+
 using namespace v8;
 using namespace node;
 
@@ -168,10 +173,6 @@ class fftw3 : ObjectWrap {
             
             // We're now done with the object
             // Decrement reference count for object
-
-            // Should no longer be necessary:
-            //uv_unref((uv_handle_t*) req) ;
-
             baton->design->Unref() ;
             
             TryCatch try_catch ;
@@ -199,7 +200,6 @@ Persistent<Function> fftw3::constructor ;
 extern "C" {
     void init (Handle<Object> target) 
     {
-        puts("Initializing!");
         fftw3::Initialize(target) ;
     }
     
