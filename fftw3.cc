@@ -114,9 +114,11 @@ class fftw3 : ObjectWrap {
             baton_t *baton = new baton_t() ;
             baton->design = design ;
             
+            char errorMessage[1000];
+            sprintf(errorMessage, "Array length not equal to design length (array length %d, design length %d)", array->Length(), 2 * (design->length)) ;
             // Make sure we're of the right size
             if( array->Length() != 2*(design->length) ) {
-                return ThrowException(Exception::Error(String::New("Array length not equal to design length"))) ;
+                return ThrowException(Exception::Error(String::New(errorMessage)));
             } else {
                 // Copy the array to the input
                 for(int i=0; i< design->length ; i+=1 ) {

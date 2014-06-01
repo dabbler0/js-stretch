@@ -16,6 +16,9 @@ Complex.prototype.mag = function() {
 
 // Calculate the angle
 Complex.prototype.angle = function() {
+  if (this.y === this.x && this.x === 0)
+    return 0;
+  else
     return Math.atan2(this.y,this.x) ;
 }
 
@@ -27,6 +30,11 @@ Complex.prototype.toPolar = function() {
 // Calculate magnitude squared
 Complex.prototype.magSquared = function() {
     return this.x*this.x + this.y*this.y ;
+}
+
+// Multiply a complex by a real
+Complex.prototype.scale = function(scale) {
+  this.x *= scale; this.y *= scale;
 }
 
 // Create an array from a complex number
@@ -50,6 +58,23 @@ Complex.flatten = exports.flatten = function(arr) {
         retval = retval.concat(arr[i].toArray()) ;
     }
     return retval ;
+}
+
+// Given some real numbers, create an array of complex values representing them
+Complex.fromReal = exports.fromReal = function(arr) {
+    var i, retval = [] ;
+    for (i=0;i<arr.length;i++) {
+      retval.push(new Complex(arr[i], 0));
+    }
+    return retval ;
+}
+
+Complex.toReal = exports.toReal = function(arr) {
+    var i, retval = [] ;
+    for (i=0;i<arr.length;i++) {
+      retval.push(arr[i].x);
+    }
+    return retval;
 }
 
 // String representation of complex value in the form x+yi
@@ -107,7 +132,7 @@ Complex.dB = exports.dB = function(arr) {
 // Create a complex value from an angle and [optional magnitude] or json object with angle/mag
 Complex.fromPolar = exports.fromPolar = function(ang,mag) {
     var angle, scale ;
-    if( ang.angle ) {
+    if( ang.angle != null ) {
         angle = ang.angle ;
         scale = ang.scale || 1.0 ;
     }
@@ -115,6 +140,6 @@ Complex.fromPolar = exports.fromPolar = function(ang,mag) {
         angle = ang ;
         scale = mag || 1.0 ;
     }
-    var retval = new Complex(scale*Math.cos(angle),scale*Math.sin(angle)) ;
+    var retval = new Complex(scale*Math.cos(angle), scale*Math.sin(angle)) ;
     return retval ;
 }

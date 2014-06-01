@@ -1,0 +1,16 @@
+{
+  "name": "audioshift",
+  "version": "0.0.2",
+  "description": "Simple JavaScript signal processing",
+  "author": "Anthony Bau",
+  "main": "./stretch.js",
+  "bin": {
+    "audioshift": "./stretch.js"
+  },
+  "scripts": {
+  },
+  "dependencies": {
+    "optimist": "latest"
+  },
+  "license": "MIT"
+}

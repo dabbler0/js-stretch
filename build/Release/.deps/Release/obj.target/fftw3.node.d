@@ -1,0 +1,1 @@
+cmd_Release/obj.target/fftw3.node := flock ./Release/linker.lock g++ -shared -pthread -rdynamic -m64  -Wl,-soname=fftw3.node -o Release/obj.target/fftw3.node -Wl,--start-group Release/obj.target/fftw3/fftw3.o -Wl,--end-group -lfftw3 -lm
